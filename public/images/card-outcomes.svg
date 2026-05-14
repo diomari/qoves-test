@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Outcome planning placeholder">
+  <rect width="640" height="360" fill="#798484"/>
+  <path d="M74 254C150 128 245 126 357 238c72 72 129 77 208 15" fill="none" stroke="#ffffff" stroke-width="9" opacity="0.7"/>
+  <path d="M84 78h180v20H84zm0 42h112v14H84zm0 34h142v14H84z" fill="#ffffff" opacity="0.58"/>
+  <rect x="402" y="76" width="130" height="176" rx="14" fill="#ffffff" opacity="0.18"/>
+  <path d="M440 128h54M440 166h76M440 204h42" stroke="#ffffff" stroke-width="8" opacity="0.55"/>
+</svg>

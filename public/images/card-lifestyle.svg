@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Lifestyle factors placeholder">
+  <rect width="640" height="360" fill="#9aa6a5"/>
+  <rect x="44" y="44" width="146" height="146" rx="16" fill="#d5b296"/>
+  <path d="M70 216h220v16H70zm0 40h180v16H70zm0 40h250v16H70z" fill="#ffffff" opacity="0.58"/>
+  <path d="M360 48h200v264H360z" fill="#202725" opacity="0.42"/>
+  <path d="M392 110h134M392 158h88M392 206h112" stroke="#ffffff" stroke-width="8" opacity="0.54"/>
+</svg>

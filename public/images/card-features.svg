@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Feature context placeholder">
+  <rect width="640" height="360" fill="#6f7876"/>
+  <path d="M250 172c0-87 38-140 96-140s96 53 96 140c0 96-41 166-96 166s-96-70-96-166z" fill="#c3a58b"/>
+  <path d="M218 176h256M346 34v300M266 112h160M285 232h122" stroke="#ffffff" stroke-width="5" opacity="0.5"/>
+  <path d="M54 70h112M54 112h70M500 80h94M500 122h62" stroke="#ffffff" stroke-width="8" opacity="0.48"/>
+</svg>

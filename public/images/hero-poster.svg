@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" role="img" aria-label="Soft clinical portrait placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#8f928d"/>
+      <stop offset="0.52" stop-color="#696d68"/>
+      <stop offset="1" stop-color="#303331"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#26302d"/>
+      <stop offset="1" stop-color="#111514"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1600" fill="url(#bg)"/>
+  <g opacity="0.36" fill="none" stroke="#ffffff" stroke-width="2">
+    <path d="M130 590h330v230H130z"/>
+    <path d="M760 500h260v360H760z"/>
+    <path d="M120 870h390v280H120z"/>
+    <path d="M710 960h380v170H710z"/>
+    <path d="M170 760h250M170 805h180M820 615v190M820 706h150M210 1010h250"/>
+  </g>
+  <g>
+    <path d="M354 1550c22-300 97-465 249-465s234 165 260 465z" fill="url(#shirt)"/>
+    <path d="M424 640c0-150 72-245 181-245s181 95 181 245c0 166-78 300-181 300S424 806 424 640z" fill="#bda088"/>
+    <path d="M420 640c-30-80-26-196 31-267 51-63 105-83 160-82 113 2 211 105 206 253-18-90-70-140-158-155-93-16-173 20-239 251z" fill="#5c5049"/>
+    <path d="M482 704c32 20 78 31 123 31 47 0 92-11 124-31" fill="none" stroke="#6d5649" stroke-width="7" stroke-linecap="round" opacity="0.45"/>
+    <path d="M525 615c24 10 48 10 72 0M650 615c24 10 48 10 72 0" fill="none" stroke="#24312d" stroke-width="8" stroke-linecap="round" opacity="0.75"/>
+  </g>
+</svg>
