@@ -26,6 +26,18 @@ export function VideoBackdrop({
         >
           <source src={media.src} type="video/mp4" />
         </video>
+      ) : media?.type === "video" && media.responsivePoster ? (
+        <picture className="block size-full">
+          <source
+            media={`(min-width: ${media.responsivePoster.breakpoint ?? 768}px)`}
+            srcSet={media.responsivePoster.desktop}
+          />
+          <img
+            alt=""
+            className="size-full object-cover"
+            src={media.responsivePoster.mobile}
+          />
+        </picture>
       ) : media?.type === "video" && media.poster ? (
         <div
           className="size-full bg-cover bg-center"

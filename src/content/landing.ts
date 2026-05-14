@@ -2,6 +2,11 @@ export type MediaAsset = {
   type: "image" | "video";
   src: string;
   poster?: string;
+  responsivePoster?: {
+    mobile: string;
+    desktop: string;
+    breakpoint?: number;
+  };
   alt: string;
   priority?: boolean;
 };
@@ -42,7 +47,11 @@ export const heroContent: SectionContent = {
   media: {
     type: "video",
     src: "",
-    poster: "/images/hero-poster.svg",
+    responsivePoster: {
+      mobile: "/images/female-top-xs.png",
+      desktop: "/images/female-top-md.png",
+      breakpoint: 768
+    },
     alt: "Facial analysis preview",
     priority: true
   }
