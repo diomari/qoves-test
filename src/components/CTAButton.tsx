@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { cn } from "@/lib/cn";
+import { ppNeueMontrealMedium } from "@/lib/fonts";
 
 type CTAButtonProps = {
   href: string;
@@ -13,7 +14,8 @@ export function CTAButton({ href, children, className }: CTAButtonProps) {
   return (
     <Link
       className={cn(
-        "group inline-flex min-h-11 items-center gap-3 rounded-[7px] bg-white/20 px-5 text-sm font-medium text-white shadow-glass ring-1 ring-white/25 backdrop-blur-md transition duration-300 hover:bg-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
+        ppNeueMontrealMedium.className,
+        "group inline-flex min-h-11 items-center gap-3 rounded-[7px] bg-white/20 px-5 text-sm text-white shadow-glass ring-1 ring-white/25 backdrop-blur-md transition duration-300 hover:bg-white/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
         className
       )}
       href={href}

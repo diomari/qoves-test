@@ -1,64 +1,59 @@
 "use client";
 
-import { motion, useReducedMotion } from "motion/react";
+import Image from "next/image";
 
 import type { SectionContent } from "@/content/landing";
 
-import { VideoBackdrop } from "./VideoBackdrop";
+import { TextPill } from "./general/TextPill";
 
 type HeroProps = {
   content: SectionContent;
 };
 
 export function Hero({ content }: HeroProps) {
-  const reduceMotion = useReducedMotion();
-
   return (
-    <section className="relative isolate min-h-[660px] overflow-hidden bg-stone text-white sm:min-h-[760px] lg:min-h-[860px]">
-      <VideoBackdrop
-        media={content.media}
-        overlayClassName="bg-[linear-gradient(180deg,rgba(71,73,70,0.44)_0%,rgba(87,89,85,0.52)_42%,rgba(40,42,40,0.9)_100%)]"
+    <section className="relative isolate min-h-165 overflow-hidden bg-[#9AAEB5] text-white sm:min-h-190 lg:min-h-215">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,#9ba3a6_0%,#9d9a97_52%,#8a8682_100%)] md:bg-[linear-gradient(180deg,#a3b2b9_0%,#9eadb3_32%,#94a1a6_100%)]"
       />
-      <div className="absolute inset-x-0 top-0 z-10 h-28 bg-[linear-gradient(180deg,rgba(43,45,43,0.62),transparent)]" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(202,188,181,0.48)_0%,rgba(191,177,170,0.34)_20%,rgba(171,160,154,0.18)_38%,rgba(154,174,181,0.06)_58%,transparent_78%)] md:bg-[radial-gradient(ellipse_at_50%_38%,rgba(205,189,181,0.56)_0%,rgba(193,178,170,0.42)_16%,rgba(176,163,156,0.24)_30%,rgba(156,168,173,0.08)_44%,transparent_58%)]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,0.08)_0%,rgba(255,255,255,0.03)_24%,transparent_44%)] md:bg-[radial-gradient(ellipse_at_50%_20%,rgba(255,255,255,0.1)_0%,rgba(255,255,255,0.04)_16%,transparent_30%)]"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.02)_0%,rgba(149,138,132,0.06)_48%,rgba(77,79,81,0.18)_100%)] md:bg-[linear-gradient(180deg,rgba(255,255,255,0.02)_0%,rgba(154,174,181,0.02)_36%,rgba(89,101,106,0.12)_100%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-28 bg-[linear-gradient(180deg,rgba(132,140,144,0.14),transparent)]" />
 
-      <div className="relative z-10 mx-auto flex min-h-[660px] w-full max-w-6xl flex-col items-center px-4 pt-24 text-center sm:min-h-[760px] lg:min-h-[860px] lg:pt-28">
-        <motion.p
-          className="mb-4 rounded-full border border-white/25 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.22em] text-white/80"
-          initial={reduceMotion ? false : { opacity: 0, y: -10 }}
-          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-        >
+      <div className="relative z-10 mx-auto flex min-h-165 w-full max-w-6xl flex-col items-center px-4 pt-24 text-center sm:min-h-190 lg:min-h-215 lg:pt-28">
+        <TextPill style="outline" className="mb-5">
           {content.eyebrow}
-        </motion.p>
-        <motion.h1
-          className="max-w-[16rem] text-balance text-[2rem] font-light leading-[0.96] tracking-normal sm:max-w-lg sm:text-5xl lg:max-w-2xl lg:text-7xl"
-          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.06, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {content.heading}
-        </motion.h1>
-        <motion.p
-          className="mt-5 max-w-[18rem] text-pretty text-xs leading-5 text-white/76 sm:max-w-md sm:text-sm"
-          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
-          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.14, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {content.body}
-        </motion.p>
+        </TextPill>
+        <div className="px-4">
+          <h1 className="max-w-full text-balance text-[32px] mb-2 md:mb-3 md:text-[40px] leading-9 md:leading-12 tracking-tight  sm:text-5xl  lg:text-7xl">
+            {content.heading}
+          </h1>
+          <p className="mt-3 max-w-full text-pretty text-[14px] md:text-[16px] leading-5 text-white/70">
+            {content.body}
+          </p>
+        </div>
 
-        <motion.div
-          className="relative mt-auto h-[390px] w-full max-w-[390px] sm:h-[460px] sm:max-w-[460px] lg:h-[560px] lg:max-w-[620px]"
-          initial={reduceMotion ? false : { opacity: 0, scale: 0.98, y: 26 }}
-          animate={reduceMotion ? undefined : { opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className="relative mt-auto h-[436px] w-full max-w-[360px] sm:h-[520px] sm:max-w-[460px] lg:h-[760px] lg:max-w-[768px]">
           <DiagnosticPanel className="left-0 top-4 w-[44%]" variant="chart" />
           <DiagnosticPanel className="right-0 top-10 w-[35%]" variant="axis" />
-          <DiagnosticPanel className="bottom-24 left-0 w-[48%]" variant="grid" />
-          <DiagnosticPanel className="bottom-20 right-1 w-[42%]" variant="bars" />
-          <FaceSilhouette />
-        </motion.div>
+          <DiagnosticPanel
+            className="bottom-24 left-0 w-[48%]"
+            variant="grid"
+          />
+          <DiagnosticPanel
+            className="bottom-20 right-1 w-[42%]"
+            variant="bars"
+          />
+          <HeroFigure media={content.media} />
+        </div>
       </div>
     </section>
   );
@@ -66,14 +61,14 @@ export function Hero({ content }: HeroProps) {
 
 function DiagnosticPanel({
   className,
-  variant
+  variant,
 }: {
   className: string;
   variant: "chart" | "axis" | "grid" | "bars";
 }) {
   return (
     <div
-      className={`absolute rounded-[3px] border border-white/8 bg-[#6e7471]/58 p-3 text-left shadow-diagnostic backdrop-blur-sm ${className}`}
+      className={`pointer-events-none absolute rounded-[3px] border border-white/8 bg-[#6e7471]/58 p-3 text-left shadow-diagnostic backdrop-blur-sm ${className}`}
     >
       {variant === "chart" ? (
         <div className="space-y-2">
@@ -105,7 +100,10 @@ function DiagnosticPanel({
         <div className="space-y-3">
           {[82, 48, 92, 63].map((width) => (
             <div className="h-px bg-white/18" key={width}>
-              <span className="block h-px bg-white/70" style={{ width: `${width}%` }} />
+              <span
+                className="block h-px bg-white/70"
+                style={{ width: `${width}%` }}
+              />
             </div>
           ))}
         </div>
@@ -114,17 +112,46 @@ function DiagnosticPanel({
   );
 }
 
-function FaceSilhouette() {
+function HeroFigure({ media }: { media?: SectionContent["media"] }) {
+  const mobileImage = media?.src || media?.poster;
+  const mediumImage = "/images/female-top-md.png";
+  const wideImage = "/images/female-top-xl.png";
+
   return (
-    <div className="absolute inset-x-8 bottom-0 mx-auto h-[360px] max-w-[270px] sm:h-[430px] sm:max-w-[320px] lg:h-[520px] lg:max-w-[390px]">
-      <div className="absolute inset-x-[22%] top-0 h-[40%] rounded-t-[48%] rounded-b-[42%] bg-[radial-gradient(circle_at_52%_36%,#d2bba5_0%,#b9987d_42%,#7b6658_100%)] shadow-[0_12px_36px_rgba(0,0,0,0.22)]" />
-      <div className="absolute left-[20%] top-[22%] h-[24%] w-[11%] rounded-full bg-[#6f5e54]" />
-      <div className="absolute right-[20%] top-[22%] h-[24%] w-[11%] rounded-full bg-[#6f5e54]" />
-      <div className="absolute inset-x-[12%] bottom-0 h-[62%] rounded-t-[44%] bg-[#202523] shadow-[0_-18px_34px_rgba(0,0,0,0.18)]" />
-      <div className="absolute left-1/2 top-[17%] h-[11%] w-[33%] -translate-x-1/2 rounded-full bg-white/28 blur-[18px]" />
-      <div className="absolute left-1/2 top-[20%] h-px w-[30%] -translate-x-1/2 bg-white/70" />
-      <div className="absolute left-[40%] top-[27%] size-2 rounded-full bg-[#37443e]" />
-      <div className="absolute right-[40%] top-[27%] size-2 rounded-full bg-[#37443e]" />
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 mx-auto flex justify-center">
+      {mobileImage ? (
+        <Image
+          alt={media?.alt ?? "Facial analysis portrait"}
+          className="h-auto w-90 object-contain object-bottom md:hidden"
+          height={873}
+          priority={media?.priority}
+          sizes="360px"
+          src={mobileImage}
+          width={720}
+        />
+      ) : null}
+      {mediumImage ? (
+        <Image
+          alt={media?.alt ?? "Facial analysis portrait"}
+          className="hidden h-auto w-90 object-contain object-bottom md:block md:w-[760px] xl:hidden"
+          height={1200}
+          priority={media?.priority}
+          sizes="760px"
+          src={mediumImage}
+          width={720}
+        />
+      ) : null}
+      {wideImage ? (
+        <Image
+          alt={media?.alt ?? "Facial analysis portrait"}
+          className="hidden h-auto w-90 object-contain object-bottom md:w-[760px] xl:block"
+          height={873}
+          priority={media?.priority}
+          sizes="760px"
+          src={wideImage}
+          width={720}
+        />
+      ) : null}
     </div>
   );
 }

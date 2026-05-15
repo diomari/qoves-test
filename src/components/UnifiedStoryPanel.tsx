@@ -5,52 +5,94 @@ import {
   useMotionValue,
   useReducedMotion,
   useSpring,
-  useTransform
+  useTransform,
 } from "motion/react";
 import { useEffect, useRef, useState, type RefObject } from "react";
 
-import type { CarouselCard, SectionContent } from "@/content/landing";
+import type {
+  CarouselCard,
+  MindsetCard,
+  SectionContent,
+} from "@/content/landing";
 
 import { CTAButton } from "./CTAButton";
 import { GlassPanel } from "./GlassPanel";
 import { MediaCarousel } from "./MediaCarousel";
+import { TextPill } from "./general/TextPill";
 
 type UnifiedStoryPanelProps = {
   insecuritySection: SectionContent;
   analysisCards: CarouselCard[];
   mindsetSection: SectionContent;
-  mindsetCards: CarouselCard[];
+  mindsetCards: MindsetCard[];
 };
 
 export function UnifiedStoryPanel({
   insecuritySection,
   analysisCards,
   mindsetSection,
-  mindsetCards
+  mindsetCards,
 }: UnifiedStoryPanelProps) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const reduceMotion = useReducedMotion();
+  const isMobileViewport = useIsMobileViewport();
+  const isXlViewport = useIsXlViewport();
   const videoSource = useResponsiveStoryVideo();
   const scrollYProgress = useStoryScrollProgress(sectionRef);
   const panelScrollProgress = useStickyPanelScrollProgress(sectionRef);
+  const useDesktopParallax = isXlViewport && !reduceMotion;
 
-  const firstY = useTransform(scrollYProgress, [0.08, 0.48], [52, -46]);
-  const firstOpacity = useTransform(
-    scrollYProgress,
-    [0.04, 0.16, 0.42, 0.54],
-    [0, 1, 1, 0]
+  const compactFirstY = useTransform(
+    panelScrollProgress,
+    [0.02, 0.24, 0.5],
+    [120, 0, -420],
+  );
+  const mobileFirstY = useTransform(
+    panelScrollProgress,
+    [0.02, 0.22, 0.46],
+    [148, 0, -620],
   );
   const secondY = useTransform(scrollYProgress, [0.42, 0.88], [70, -30]);
   const secondOpacity = useTransform(
     scrollYProgress,
     [0.42, 0.55, 0.9, 0.98],
-    [0, 1, 1, 0]
+    [0, 1, 1, 0],
+  );
+  const desktopFirstY = useTransform(
+    panelScrollProgress,
+    [0, 0.22, 0.46],
+    [140, 0, -420],
+  );
+  const desktopFirstTextY = useTransform(
+    panelScrollProgress,
+    [0.02, 0.36],
+    [48, -180],
+  );
+  const desktopAnalysisCardsY = useTransform(
+    panelScrollProgress,
+    [0.08, 0.54],
+    [180, -360],
+  );
+  const desktopSecondY = useTransform(
+    panelScrollProgress,
+    [0.34, 0.62, 0.94],
+    [170, 0, -34],
+  );
+  const desktopFirstMindsetCardY = useTransform(
+    panelScrollProgress,
+    [0.42, 0.88],
+    [260, 120],
+  );
+  const desktopSecondMindsetCardY = useTransform(
+    panelScrollProgress,
+    [0.54, 0.98],
+    [310, -82],
   );
   const videoScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.14]);
   const videoBlur = useTransform(
     panelScrollProgress,
     [0.12, 0.44, 1],
-    ["blur(0px)", "blur(7px)", "blur(12px)"]
+    ["blur(0px)", "blur(7px)", "blur(12px)"],
   );
 
   return (
@@ -62,7 +104,7 @@ export function UnifiedStoryPanel({
         <motion.video
           aria-hidden="true"
           autoPlay
-          className="absolute inset-0 size-full object-cover"
+          className="pointer-events-none absolute inset-0 size-full object-cover"
           key={videoSource}
           loop
           muted
@@ -71,78 +113,199 @@ export function UnifiedStoryPanel({
           preload="metadata"
           style={{
             filter: reduceMotion ? "blur(7px)" : videoBlur,
-            scale: reduceMotion ? 1.06 : videoScale
+            scale: reduceMotion ? 1.06 : videoScale,
           }}
         >
           <source key={videoSource} src={videoSource} type="video/mp4" />
         </motion.video>
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(18,19,18,0.12)_0%,rgba(18,19,18,0.48)_44%,rgba(18,19,18,0.9)_100%)]" />
-        <div className="absolute inset-0 bg-black/10" />
+        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(18,19,18,0.12)_0%,rgba(18,19,18,0.48)_44%,rgba(18,19,18,0.9)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-black/10" />
 
-        <div className="relative z-10 mx-auto grid h-full max-w-6xl items-center px-4 py-12">
+        <div className="relative z-10 mx-auto grid h-full max-w-6xl items-center md:px-4 py-12">
           <motion.div
-            className="mx-auto flex w-full max-w-3xl flex-col items-center text-center"
+            className="mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center text-center sm:max-w-3xl xl:max-w-6xl"
             style={{
-              opacity: reduceMotion ? 1 : firstOpacity,
-              y: reduceMotion ? 0 : firstY
+              y: useDesktopParallax
+                ? desktopFirstY
+                : reduceMotion
+                  ? 0
+                  : isMobileViewport
+                    ? mobileFirstY
+                    : compactFirstY,
             }}
           >
-            <p className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-white/70">
-              {insecuritySection.eyebrow}
-            </p>
-            <h2 className="max-w-sm text-balance text-[2rem] font-light leading-none tracking-normal sm:max-w-2xl sm:text-6xl">
-              {insecuritySection.heading}
-            </h2>
-            <p className="mt-5 max-w-[18rem] text-pretty text-xs leading-5 text-white/72 sm:max-w-md sm:text-sm">
-              {insecuritySection.body}
-            </p>
-            {insecuritySection.cta ? (
-              <div className="mt-7">
-                <CTAButton href={insecuritySection.cta.href}>
-                  {insecuritySection.cta.label}
-                </CTAButton>
-              </div>
-            ) : null}
-            <div className="mt-16 w-full">
-              <MediaCarousel cards={analysisCards} />
-            </div>
+            <motion.div
+              className="mx-auto flex w-full max-w-[22rem] flex-col items-center text-center sm:max-w-2xl"
+              style={{
+                y: useDesktopParallax ? desktopFirstTextY : 0,
+              }}
+            >
+              <TextPill style="glass" className="mb-3">
+                {insecuritySection.eyebrow}
+              </TextPill>
+              <h2 className="mx-auto max-w-[20rem] text-balance text-[32px] font-light leading-none tracking-normal sm:max-w-2xl sm:text-[6xl] ">
+                {insecuritySection.heading}
+              </h2>
+              <p className="mx-auto mt-5 max-w-[20rem] text-pretty text-xs leading-5 text-white/72 sm:max-w-md sm:text-sm">
+                {insecuritySection.body}
+              </p>
+              {insecuritySection.cta ? (
+                <div className="mt-7 flex w-full justify-center md:hidden">
+                  <CTAButton href={insecuritySection.cta.href}>
+                    {insecuritySection.cta.label}
+                  </CTAButton>
+                </div>
+              ) : null}
+            </motion.div>
+
+            <motion.div
+              className="mt-16 w-full xl:max-w-none"
+              style={{
+                y: useDesktopParallax ? desktopAnalysisCardsY : 0,
+              }}
+            >
+              <MediaCarousel align="start" cards={analysisCards} />
+            </motion.div>
           </motion.div>
 
           <motion.div
             className="absolute inset-x-0 top-1/2 mx-auto flex w-full max-w-6xl -translate-y-1/2 flex-col items-center px-4 text-center"
             style={{
               opacity: reduceMotion ? 1 : secondOpacity,
-              y: reduceMotion ? 0 : secondY
+              y: useDesktopParallax ? desktopSecondY : reduceMotion ? 0 : secondY,
             }}
           >
-            <h2 className="max-w-xs text-balance text-[2rem] font-light leading-none tracking-normal sm:max-w-2xl sm:text-6xl">
-              {mindsetSection.heading}
-            </h2>
-            <p className="mt-5 max-w-[19rem] text-pretty text-xs leading-5 text-white/72 sm:max-w-lg sm:text-sm">
-              {mindsetSection.body}
-            </p>
-            <div className="mt-16 w-full">
+            <div className="relative z-10 flex flex-col items-center">
+              <h2 className="max-w-xs text-balance text-[2rem] font-light leading-none tracking-normal sm:max-w-2xl sm:text-5xl lg:text-6xl">
+                {mindsetSection.heading}
+              </h2>
+              <p className="mt-5 max-w-[19rem] text-pretty text-xs leading-5 text-white/72 sm:max-w-lg sm:text-sm">
+                {mindsetSection.body}
+              </p>
+            </div>
+
+            <div className="mt-16 w-full xl:hidden">
               <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-2 text-left [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {mindsetCards.map((card) => (
-                  <GlassPanel
-                    className="min-h-[188px] w-[274px] shrink-0 p-4"
+                  <MindsetCardPanel
+                    className="w-[302px] shrink-0 sm:w-[340px] lg:w-[520px]"
+                    card={card}
                     key={card.title}
-                  >
-                    <h3 className="text-lg font-light leading-tight">
-                      {card.title}
-                    </h3>
-                    <p className="mt-14 rounded-[4px] bg-white/12 px-3 py-2 text-[11px] leading-4 text-white/74 ring-1 ring-white/12">
-                      {card.body}
-                    </p>
-                  </GlassPanel>
+                  />
                 ))}
               </div>
             </div>
+
+            {mindsetCards[0] ? (
+              <motion.div
+                className="pointer-events-none absolute left-10 top-[-210px] hidden xl:block lg:left-12"
+                style={{
+                  y: useDesktopParallax
+                    ? desktopFirstMindsetCardY
+                    : reduceMotion
+                      ? 0
+                      : 0,
+                }}
+              >
+                <MindsetCardPanel
+                  className="w-[360px] lg:w-[390px]"
+                  card={mindsetCards[0]}
+                />
+              </motion.div>
+            ) : null}
+
+            {mindsetCards[1] ? (
+              <motion.div
+                className="pointer-events-none absolute right-10 top-[120px] hidden xl:block lg:right-12"
+                style={{
+                  y: useDesktopParallax
+                    ? desktopSecondMindsetCardY
+                    : reduceMotion
+                      ? 0
+                      : 0,
+                }}
+              >
+                <MindsetCardPanel
+                  className="w-[360px] lg:w-[390px]"
+                  card={mindsetCards[1]}
+                />
+              </motion.div>
+            ) : null}
           </motion.div>
         </div>
       </div>
     </section>
   );
+}
+
+function MindsetCardPanel({
+  card,
+  className,
+}: {
+  card: MindsetCard;
+  className?: string;
+}) {
+  return (
+    <GlassPanel
+      className={`min-h-[244px] p-4 sm:min-h-[280px] ${className ?? ""}`}
+    >
+      <h3 className="text-[1.7rem] font-light leading-none tracking-normal text-white sm:text-3xl">
+        {card.title}
+      </h3>
+      <div className="mt-24 space-y-3 sm:mt-28">
+        {(card.items ?? []).map((item) => (
+          <div
+            className="rounded-[4px] bg-white/12 px-4 py-3 text-[11px] leading-5 text-white/88 ring-1 ring-white/12 sm:text-xs"
+            key={item}
+          >
+            {item}
+          </div>
+        ))}
+      </div>
+    </GlassPanel>
+  );
+}
+
+function useIsXlViewport() {
+  const [isXlViewport, setIsXlViewport] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(min-width: 1280px)");
+
+    function syncViewport() {
+      setIsXlViewport(query.matches);
+    }
+
+    syncViewport();
+    query.addEventListener("change", syncViewport);
+
+    return () => {
+      query.removeEventListener("change", syncViewport);
+    };
+  }, []);
+
+  return isXlViewport;
+}
+
+function useIsMobileViewport() {
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 639px)");
+
+    function syncViewport() {
+      setIsMobileViewport(query.matches);
+    }
+
+    syncViewport();
+    query.addEventListener("change", syncViewport);
+
+    return () => {
+      query.removeEventListener("change", syncViewport);
+    };
+  }, []);
+
+  return isMobileViewport;
 }
 
 function useResponsiveStoryVideo() {
@@ -184,7 +347,7 @@ function useStoryScrollProgress(sectionRef: RefObject<HTMLElement | null>) {
   const smoothProgress = useSpring(progress, {
     stiffness: 90,
     damping: 26,
-    mass: 0.18
+    mass: 0.18,
   });
 
   useEffect(() => {
@@ -223,12 +386,14 @@ function useStoryScrollProgress(sectionRef: RefObject<HTMLElement | null>) {
   return smoothProgress;
 }
 
-function useStickyPanelScrollProgress(sectionRef: RefObject<HTMLElement | null>) {
+function useStickyPanelScrollProgress(
+  sectionRef: RefObject<HTMLElement | null>,
+) {
   const progress = useMotionValue(0);
   const smoothProgress = useSpring(progress, {
     stiffness: 100,
     damping: 28,
-    mass: 0.16
+    mass: 0.16,
   });
 
   useEffect(() => {

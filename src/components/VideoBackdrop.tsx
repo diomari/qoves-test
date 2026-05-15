@@ -13,7 +13,7 @@ export function VideoBackdrop({
   overlayClassName
 }: VideoBackdropProps) {
   return (
-    <div className={cn("absolute inset-0 overflow-hidden", className)} aria-hidden="true">
+    <div className={cn("pointer-events-none absolute inset-0 overflow-hidden", className)} aria-hidden="true">
       {media?.type === "video" && media.src ? (
         <video
           className="size-full object-cover"
@@ -53,7 +53,7 @@ export function VideoBackdrop({
       )}
       <div
         className={cn(
-          "absolute inset-0 bg-[linear-gradient(180deg,rgba(41,44,42,0.18)_0%,rgba(43,44,42,0.34)_48%,rgba(25,27,26,0.76)_100%)]",
+          "pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(41,44,42,0.18)_0%,rgba(43,44,42,0.34)_48%,rgba(25,27,26,0.76)_100%)]",
           overlayClassName
         )}
       />

@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 
 import type { FAQGroup } from "@/content/landing";
 import { cn } from "@/lib/cn";
+import { ppNeueMontrealMedium } from "@/lib/fonts";
 
 type FAQAccordionProps = {
   groups: FAQGroup[];
@@ -15,7 +16,7 @@ const FAQ_SCROLL_DURATION = 880;
 export function FAQAccordion({ groups }: FAQAccordionProps) {
   const initialGroup = Math.max(
     0,
-    groups.findIndex((group) => group.defaultOpen)
+    groups.findIndex((group) => group.defaultOpen),
   );
   const [openGroup, setOpenGroup] = useState(initialGroup);
   const [openItem, setOpenItem] = useState(0);
@@ -37,7 +38,7 @@ export function FAQAccordion({ groups }: FAQAccordionProps) {
     if (reduceMotion) {
       window.scrollTo({
         top: getElementTop(groupElement) - getSnapOffset(),
-        behavior: "auto"
+        behavior: "auto",
       });
       return;
     }
@@ -55,7 +56,7 @@ export function FAQAccordion({ groups }: FAQAccordionProps) {
             className={cn(
               "overflow-hidden border-b border-ink/10",
               isGroupOpen &&
-                "rounded-[7px] border border-white/30 bg-[#95a4a5] p-2 shadow-[0_18px_50px_rgba(31,43,45,0.2)]"
+                "rounded-[7px] border border-white/30 bg-[linear-gradient(180deg,#788588_0%,#95a6a9_48%,#b7c8cb_100%)] p-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_18px_50px_rgba(31,43,45,0.2)]",
             )}
             key={group.title}
             ref={(element) => {
@@ -65,8 +66,9 @@ export function FAQAccordion({ groups }: FAQAccordionProps) {
             <button
               aria-expanded={isGroupOpen}
               className={cn(
-                "flex min-h-14 w-full items-center justify-between px-3 text-left text-sm font-medium text-ink transition",
-                isGroupOpen && "min-h-10 text-white"
+                ppNeueMontrealMedium.className,
+                "flex min-h-14 w-full items-center justify-between px-3 text-left text-sm text-ink transition",
+                isGroupOpen && "min-h-10 text-white",
               )}
               onClick={() => {
                 setOpenGroup(isGroupOpen ? -1 : groupIndex);
@@ -75,7 +77,7 @@ export function FAQAccordion({ groups }: FAQAccordionProps) {
               }}
               type="button"
             >
-              <span>{group.title}</span>
+              <span className="text-[20px]">{group.title}</span>
               <span aria-hidden="true" className="text-base font-light">
                 {isGroupOpen ? "x" : "+"}
               </span>
@@ -100,14 +102,17 @@ export function FAQAccordion({ groups }: FAQAccordionProps) {
                         <div
                           className={cn(
                             "rounded-[5px] border border-white/10 bg-white/8 text-white",
-                            isItemOpen && "bg-white/14"
+                            isItemOpen && "bg-white/14",
                           )}
                           key={item.question}
                         >
                           <button
                             aria-controls={panelId}
                             aria-expanded={isItemOpen}
-                            className="flex min-h-10 w-full items-center justify-between gap-4 px-3 text-left text-[13px] font-medium"
+                            className={cn(
+                              "flex min-h-10 w-full items-center justify-between gap-4 px-3 text-left text-[13px]",
+                              isItemOpen && "text-white",
+                            )}
                             id={buttonId}
                             onClick={() =>
                               setOpenItem(isItemOpen ? -1 : itemIndex)
@@ -115,7 +120,10 @@ export function FAQAccordion({ groups }: FAQAccordionProps) {
                             type="button"
                           >
                             <span>{item.question}</span>
-                            <span aria-hidden="true" className="text-lg font-light">
+                            <span
+                              aria-hidden="true"
+                              className="text-lg font-light"
+                            >
                               {isItemOpen ? "-" : "+"}
                             </span>
                           </button>
@@ -128,12 +136,14 @@ export function FAQAccordion({ groups }: FAQAccordionProps) {
                                 exit={{ height: 0, opacity: 0 }}
                                 id={panelId}
                                 initial={
-                                  reduceMotion ? false : { height: 0, opacity: 0 }
+                                  reduceMotion
+                                    ? false
+                                    : { height: 0, opacity: 0 }
                                 }
                                 role="region"
                                 transition={{
                                   duration: 0.24,
-                                  ease: [0.22, 1, 0.36, 1]
+                                  ease: [0.22, 1, 0.36, 1],
                                 }}
                               >
                                 <p className="px-3 pb-4 text-[12px] leading-5 text-white/78">
@@ -158,7 +168,7 @@ export function FAQAccordion({ groups }: FAQAccordionProps) {
 
 function animateScrollToElement(
   element: HTMLElement,
-  animationFrameRef: React.MutableRefObject<number | null>
+  animationFrameRef: React.MutableRefObject<number | null>,
 ) {
   const startY = window.scrollY;
   const startTime = performance.now();

@@ -4,18 +4,20 @@ import {
   heroContent,
   insecuritySection,
   mindsetCards,
-  mindsetSection
+  mindsetSection,
 } from "@/content/landing";
 
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { Hero } from "@/components/Hero";
-import { Reveal } from "@/components/Reveal";
+import { PersonalizedPlanSection } from "@/components/PersonalizedPlanSection";
 import { Section } from "@/components/Section";
 import { UnifiedStoryPanel } from "@/components/UnifiedStoryPanel";
+import { TextPill } from "@/components/general/TextPill";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-paper text-ink">
+      <PersonalizedPlanSection />
       <Hero content={heroContent} />
 
       <Section
@@ -23,21 +25,19 @@ export default function Home() {
         id="faq"
         innerClassName="max-w-[430px] sm:max-w-3xl"
       >
-        <Reveal className="text-center">
-          <p className="mx-auto mb-5 w-fit rounded-full border border-ink/10 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.2em] text-ink/42">
-            Introducing
-          </p>
-          <h2 className="text-balance text-3xl font-light leading-none tracking-normal text-ink sm:text-5xl">
+        <div className="text-center">
+          <TextPill className="mb-4">Introducing</TextPill>
+          <h2 className="text-balance text-[32px] font-light leading-none tracking-normal text-ink ">
             Frequently asked <span className="text-[#8ca2aa]">questions</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-xs text-pretty text-xs leading-5 text-ink/62 sm:max-w-md sm:text-sm">
+          <p className="mx-auto text[14px] mt-5 max-w-xs text-pretty text-xs leading-5 text-ink/62 sm:max-w-md sm:text-sm">
             If you have any other questions, please use the chat box in the
             corner right or contact us over email at help@qoves.com.
           </p>
-        </Reveal>
-        <Reveal className="mt-9" delay={0.08}>
+        </div>
+        <div className="mt-9">
           <FAQAccordion groups={faqGroups} />
-        </Reveal>
+        </div>
       </Section>
 
       <UnifiedStoryPanel
