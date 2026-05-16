@@ -1,12 +1,15 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import Image from "next/image";
-import { motion, useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
+import { TextPill } from "@/components/shared/TextPill";
 import { ppNeueMontrealMedium } from "@/lib/fonts";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
-import { TextPill } from "./general/TextPill";
+gsap.registerPlugin(useGSAP);
 
 const planSteps = [
   "Get your expert facial analysis",
@@ -16,20 +19,59 @@ const planSteps = [
 ];
 
 const placeholderImage = "/images/female-top.png";
-const cardTransition = { duration: 0.42, ease: [0.22, 1, 0.36, 1] } as const;
 
 export function PersonalizedPlanSection() {
   const [activeStep, setActiveStep] = useState(1);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
+  const rootRef = useRef<HTMLElement | null>(null);
+  const cardRefs = useRef<Array<HTMLElement | null>>([]);
+  const activeBgRefs = useRef<Array<HTMLSpanElement | null>>([]);
+
+  useGSAP(
+    () => {
+      cardRefs.current.forEach((card, index) => {
+        const activeBg = activeBgRefs.current[index];
+        const isActive = activeStep === index;
+
+        if (!card || !activeBg) {
+          return;
+        }
+
+        gsap.to(card, {
+          borderColor: isActive ? "transparent" : "#edf2f3",
+          boxShadow:
+            isActive && !reduceMotion
+              ? "0 24px 54px rgba(71, 84, 88, 0.18)"
+              : "0 0 0 rgba(71, 84, 88, 0)",
+          color: isActive ? "#ffffff" : "#111817",
+          duration: 0.32,
+          ease: "power3.out",
+          y: isActive && !reduceMotion ? -2 : 0,
+        });
+
+        gsap.to(activeBg, {
+          autoAlpha: isActive ? 1 : 0,
+          duration: 0.32,
+          ease: "power3.out",
+        });
+      });
+    },
+    {
+      dependencies: [activeStep, reduceMotion],
+      revertOnUpdate: false,
+      scope: rootRef,
+    },
+  );
 
   return (
     <section
       aria-labelledby="personalized-plan-heading"
       className="relative hidden min-h-screen overflow-hidden bg-[#fbfbfa] text-ink lg:block"
+      ref={rootRef}
     >
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[linear-gradient(to_right,rgba(154,174,181,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(154,174,181,0.1)_1px,transparent_1px)] bg-[size:380px_310px]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(154,174,181,0.12)_1px,transparent_1px),linear-gradient(to_bottom,rgba(154,174,181,0.1)_1px,transparent_1px)] bg-[size:380px_310px]"
       />
 
       <div className="relative mx-auto flex min-h-screen w-full max-w-[1500px] flex-col px-10 pb-24 pt-12 xl:px-16">
@@ -78,31 +120,23 @@ export function PersonalizedPlanSection() {
             const isActive = activeStep === index;
 
             return (
-              <motion.article
-                animate={{
-                  y: isActive && !reduceMotion ? -2 : 0,
-                  boxShadow:
-                    isActive && !reduceMotion
-                      ? "0 24px 54px rgba(71, 84, 88, 0.18)"
-                      : "0 0 0 rgba(71, 84, 88, 0)",
-                }}
-                className={[
-                  "relative min-h-[160px] overflow-hidden rounded-[10px] border p-5 transition-colors duration-300",
-                  isActive
-                    ? "border-transparent text-white"
-                    : "border-[#edf2f3] bg-white text-ink",
-                ].join(" ")}
+              <article
                 aria-current={isActive ? "step" : undefined}
+                className="relative min-h-[160px] overflow-hidden rounded-[10px] border p-5 transition-colors duration-300"
                 key={step}
                 onFocus={() => setActiveStep(index)}
                 onPointerEnter={() => setActiveStep(index)}
+                ref={(element) => {
+                  cardRefs.current[index] = element;
+                }}
                 tabIndex={0}
-                transition={cardTransition}
               >
-                <motion.span
-                  animate={{ opacity: isActive ? 1 : 0 }}
-                  className="absolute inset-0 bg-[linear-gradient(135deg,#8f9694_0%,#9aaeb5_100%)]"
-                  transition={cardTransition}
+                <span
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(135deg,#8f9694_0%,#9aaeb5_100%)]"
+                  ref={(element) => {
+                    activeBgRefs.current[index] = element;
+                  }}
+                  style={{ opacity: isActive ? 1 : 0 }}
                 />
                 <span
                   className={[
@@ -118,7 +152,7 @@ export function PersonalizedPlanSection() {
                 <p className="relative z-10 mt-12 max-w-[14rem] text-[21px] leading-[1.08] tracking-[-0.03em]">
                   {step}
                 </p>
-              </motion.article>
+              </article>
             );
           })}
         </div>
@@ -133,7 +167,7 @@ function PlanImageCard({
   reverseDot = false,
 }: {
   label: "Before" | "After";
-  reduceMotion: boolean | null;
+  reduceMotion: boolean;
   reverseDot?: boolean;
 }) {
   return (
@@ -148,7 +182,7 @@ function PlanImageCard({
           src={placeholderImage}
         />
         <figcaption
-          className={`${ppNeueMontrealMedium.className} absolute inset-x-0 top-5 text-center text-[15px] uppercase tracking-[0.03em] text-white`}
+          className={`${ppNeueMontrealMedium.className} pointer-events-none absolute inset-x-0 top-5 text-center text-[15px] uppercase tracking-[0.03em] text-white`}
         >
           {label}
         </figcaption>
@@ -177,31 +211,39 @@ function SignalDot({
 }: {
   className: string;
   delay?: number;
-  reduceMotion: boolean | null;
+  reduceMotion: boolean;
   x: number[];
   y?: number[];
 }) {
-  if (reduceMotion) {
-    return (
-      <span
-        aria-hidden="true"
-        className={`absolute size-2 rounded-full bg-[#7f969d] shadow-[0_0_0_3px_rgba(154,174,181,0.2)] ${className}`}
-      />
-    );
-  }
+  const ref = useRef<HTMLSpanElement | null>(null);
+
+  useGSAP(
+    () => {
+      const element = ref.current;
+
+      if (!element || reduceMotion) {
+        return;
+      }
+
+      const timeline = gsap.timeline({ repeat: -1, delay });
+
+      x.forEach((xValue, index) => {
+        timeline.to(element, {
+          duration: index === 0 ? 0 : 2.4,
+          ease: "sine.inOut",
+          x: xValue,
+          y: y[index] ?? 0,
+        });
+      });
+    },
+    { dependencies: [delay, reduceMotion, x, y], revertOnUpdate: true, scope: ref },
+  );
 
   return (
-    <motion.span
-      animate={{ x, y }}
+    <span
       aria-hidden="true"
-      className={`absolute size-2 rounded-full bg-[#7f969d] shadow-[0_0_0_3px_rgba(154,174,181,0.2)] ${className}`}
-      transition={{
-        delay,
-        duration: 4.8,
-        ease: "easeInOut",
-        repeat: Infinity,
-        repeatType: "loop",
-      }}
+      className={`pointer-events-none absolute size-2 rounded-full bg-[#7f969d] shadow-[0_0_0_3px_rgba(154,174,181,0.2)] ${className}`}
+      ref={ref}
     />
   );
 }

@@ -2,15 +2,12 @@
 
 import Image from "next/image";
 
-import type { SectionContent } from "@/content/landing";
+import { heroContent, type SectionContent } from "@/content/landing";
 
-import { TextPill } from "./general/TextPill";
+import { TextPill } from "@/components/shared/TextPill";
 
-type HeroProps = {
-  content: SectionContent;
-};
-
-export function Hero({ content }: HeroProps) {
+export function HeroSection() {
+  const content = heroContent;
   return (
     <section className="relative isolate min-h-165 overflow-hidden bg-[#9AAEB5] text-white sm:min-h-190 lg:min-h-215">
       <div
@@ -33,8 +30,11 @@ export function Hero({ content }: HeroProps) {
           {content.eyebrow}
         </TextPill>
         <div className="px-4">
-          <h1 className="max-w-full text-balance text-[32px] mb-2 md:mb-3 md:text-[40px] leading-9 md:leading-12 tracking-tight  sm:text-5xl  lg:text-7xl">
-            {content.heading}
+          <h1 className="max-w-full text-balance text-[32px] mb-2 md:mb-3 md:text-[40px] leading-9 md:leading-12 tracking-tight sm:text-5xl lg:text-7xl">
+            {content.heading}{" "}
+            {content.headingHighlight ? (
+              <span className="opacity-50">{content.headingHighlight}</span>
+            ) : null}
           </h1>
           <p className="mt-3 max-w-full text-pretty text-[14px] md:text-[16px] leading-5 text-white/70">
             {content.body}

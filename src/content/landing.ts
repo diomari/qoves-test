@@ -36,7 +36,8 @@ export type MindsetCard = {
 
 export type SectionContent = {
   eyebrow?: string;
-  heading: React.ReactNode;
+  heading: string;
+  headingHighlight?: string;
   body: string;
   cta?: {
     label: string;
@@ -47,11 +48,8 @@ export type SectionContent = {
 
 export const heroContent: SectionContent = {
   eyebrow: "Personalized aesthetics",
-  heading: (
-    <>
-      Your complete <span className="opacity-50">facial analysis</span>
-    </>
-  ),
+  heading: "Your complete",
+  headingHighlight: "facial analysis",
   body: "Every face is unique. We analyze 163 aspects of your face to understand your personal facial aesthetics.",
   media: {
     type: "image",

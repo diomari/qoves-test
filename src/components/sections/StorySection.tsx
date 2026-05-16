@@ -1,104 +1,193 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect, useRef, useState } from "react";
+
 import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-  useTransform,
-} from "motion/react";
-import { useEffect, useRef, useState, type RefObject } from "react";
-
-import type {
-  CarouselCard,
-  MindsetCard,
-  SectionContent,
-} from "@/content/landing";
-
-import { CTAButton } from "./CTAButton";
-import { GlassPanel } from "./GlassPanel";
-import { MediaCarousel } from "./MediaCarousel";
-import { TextPill } from "./general/TextPill";
-
-type UnifiedStoryPanelProps = {
-  insecuritySection: SectionContent;
-  analysisCards: CarouselCard[];
-  mindsetSection: SectionContent;
-  mindsetCards: MindsetCard[];
-};
-
-export function UnifiedStoryPanel({
-  insecuritySection,
   analysisCards,
-  mindsetSection,
+  insecuritySection,
   mindsetCards,
-}: UnifiedStoryPanelProps) {
+  mindsetSection,
+  type MindsetCard,
+} from "@/content/landing";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
+
+import { CTAButton } from "@/components/shared/CTAButton";
+import { GlassPanel } from "@/components/shared/GlassPanel";
+import { MediaCarousel } from "@/components/shared/MediaCarousel";
+import { TextPill } from "@/components/shared/TextPill";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+export function StorySection() {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const reduceMotion = useReducedMotion();
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const firstPanelRef = useRef<HTMLDivElement | null>(null);
+  const firstTextRef = useRef<HTMLDivElement | null>(null);
+  const analysisCardsRef = useRef<HTMLDivElement | null>(null);
+  const secondPanelRef = useRef<HTMLDivElement | null>(null);
+  const firstMindsetCardRef = useRef<HTMLDivElement | null>(null);
+  const secondMindsetCardRef = useRef<HTMLDivElement | null>(null);
+  const reduceMotion = usePrefersReducedMotion();
   const isMobileViewport = useIsMobileViewport();
   const isMediumLargeViewport = useIsMediumLargeViewport();
   const isXlViewport = useIsXlViewport();
   const videoSource = useResponsiveStoryVideo();
-  const scrollYProgress = useStoryScrollProgress(sectionRef);
-  const panelScrollProgress = useStickyPanelScrollProgress(sectionRef);
-  const useDesktopParallax = isXlViewport && !reduceMotion;
 
-  const compactFirstY = useTransform(
-    panelScrollProgress,
-    [0.02, 0.24, 0.5],
-    [120, 0, -420],
-  );
-  const mobileFirstY = useTransform(
-    panelScrollProgress,
-    [0.02, 0.22, 0.46],
-    [148, 0, -620],
-  );
-  const mediumLargeFirstY = useTransform(
-    panelScrollProgress,
-    [0.02, 0.22, 0.48],
-    [132, 0, -760],
-  );
-  const secondY = useTransform(scrollYProgress, [0.42, 0.88], [70, -30]);
-  const secondOpacity = useTransform(
-    scrollYProgress,
-    [0.42, 0.55, 0.9, 0.98],
-    [0, 1, 1, 0],
-  );
-  const desktopFirstY = useTransform(
-    panelScrollProgress,
-    [0, 0.22, 0.46],
-    [140, 0, -420],
-  );
-  const desktopFirstTextY = useTransform(
-    panelScrollProgress,
-    [0.02, 0.36],
-    [48, -180],
-  );
-  const desktopAnalysisCardsY = useTransform(
-    panelScrollProgress,
-    [0.08, 0.54],
-    [180, -360],
-  );
-  const desktopSecondY = useTransform(
-    panelScrollProgress,
-    [0.34, 0.62, 0.94],
-    [170, 0, -34],
-  );
-  const desktopFirstMindsetCardY = useTransform(
-    panelScrollProgress,
-    [0.42, 0.88],
-    [260, 120],
-  );
-  const desktopSecondMindsetCardY = useTransform(
-    panelScrollProgress,
-    [0.54, 0.98],
-    [310, -82],
-  );
-  const videoScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.14]);
-  const videoBlur = useTransform(
-    panelScrollProgress,
-    [0.12, 0.44, 1],
-    ["blur(0px)", "blur(7px)", "blur(12px)"],
+  useGSAP(
+    () => {
+      const section = sectionRef.current;
+
+      if (!section) {
+        return;
+      }
+
+      gsap.set(secondPanelRef.current, { autoAlpha: reduceMotion ? 1 : 0 });
+
+      if (reduceMotion) {
+        gsap.set(videoRef.current, { filter: "blur(7px)", scale: 1.06 });
+        gsap.set(
+          [
+            firstPanelRef.current,
+            firstTextRef.current,
+            analysisCardsRef.current,
+            secondPanelRef.current,
+            firstMindsetCardRef.current,
+            secondMindsetCardRef.current,
+          ],
+          { clearProps: "transform" },
+        );
+        return;
+      }
+
+      const firstY = isXlViewport
+        ? [140, 0, -420]
+        : isMobileViewport
+          ? [148, 0, -620]
+          : isMediumLargeViewport
+            ? [132, 0, -760]
+            : [120, 0, -420];
+
+      gsap.fromTo(
+        firstPanelRef.current,
+        { y: firstY[0] },
+        {
+          ease: "none",
+          keyframes: [{ y: firstY[1] }, { y: firstY[2] }],
+          scrollTrigger: {
+            end: "bottom bottom",
+            scrub: 0.45,
+            start: "top top",
+            trigger: section,
+          },
+        },
+      );
+
+      gsap.fromTo(
+        secondPanelRef.current,
+        { autoAlpha: 0, y: 70 },
+        {
+          autoAlpha: 1,
+          ease: "none",
+          keyframes: [
+            { autoAlpha: 1, y: 0 },
+            { autoAlpha: 1, y: -20 },
+            { autoAlpha: 0, y: -30 },
+          ],
+          scrollTrigger: {
+            end: "bottom bottom",
+            scrub: 0.45,
+            start: "35% top",
+            trigger: section,
+          },
+        },
+      );
+
+      gsap.fromTo(
+        videoRef.current,
+        { filter: "blur(0px)", scale: 1.05 },
+        {
+          ease: "none",
+          filter: "blur(12px)",
+          scale: 1.14,
+          scrollTrigger: {
+            end: "bottom bottom",
+            scrub: 0.5,
+            start: "top top",
+            trigger: section,
+          },
+        },
+      );
+
+      if (isXlViewport) {
+        gsap.fromTo(
+          firstTextRef.current,
+          { y: 48 },
+          {
+            ease: "none",
+            scrollTrigger: {
+              end: "45% top",
+              scrub: 0.4,
+              start: "top top",
+              trigger: section,
+            },
+            y: -180,
+          },
+        );
+
+        gsap.fromTo(
+          analysisCardsRef.current,
+          { y: 180 },
+          {
+            ease: "none",
+            scrollTrigger: {
+              end: "62% top",
+              scrub: 0.4,
+              start: "8% top",
+              trigger: section,
+            },
+            y: -360,
+          },
+        );
+
+        gsap.fromTo(
+          firstMindsetCardRef.current,
+          { y: 260 },
+          {
+            ease: "none",
+            scrollTrigger: {
+              end: "88% top",
+              scrub: 0.4,
+              start: "42% top",
+              trigger: section,
+            },
+            y: 120,
+          },
+        );
+
+        gsap.fromTo(
+          secondMindsetCardRef.current,
+          { y: 310 },
+          {
+            ease: "none",
+            scrollTrigger: {
+              end: "98% top",
+              scrub: 0.4,
+              start: "54% top",
+              trigger: section,
+            },
+            y: -82,
+          },
+        );
+      }
+    },
+    {
+      dependencies: [isMediumLargeViewport, isMobileViewport, isXlViewport, reduceMotion],
+      revertOnUpdate: true,
+      scope: sectionRef,
+    },
   );
 
   return (
@@ -107,7 +196,7 @@ export function UnifiedStoryPanel({
       ref={sectionRef}
     >
       <div className="sticky top-0 isolate h-svh min-h-[760px] overflow-hidden">
-        <motion.video
+        <video
           aria-hidden="true"
           autoPlay
           className="pointer-events-none absolute inset-0 size-full object-cover"
@@ -117,36 +206,21 @@ export function UnifiedStoryPanel({
           playsInline
           poster="/images/lifestyle-poster.svg"
           preload="metadata"
-          style={{
-            filter: reduceMotion ? "blur(7px)" : videoBlur,
-            scale: reduceMotion ? 1.06 : videoScale,
-          }}
+          ref={videoRef}
         >
           <source key={videoSource} src={videoSource} type="video/mp4" />
-        </motion.video>
+        </video>
         <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(18,19,18,0.12)_0%,rgba(18,19,18,0.48)_44%,rgba(18,19,18,0.9)_100%)]" />
         <div className="pointer-events-none absolute inset-0 bg-black/10" />
 
-        <div className="relative z-10 mx-auto grid h-full max-w-6xl items-center md:px-4 py-12">
-          <motion.div
+        <div className="relative z-10 mx-auto grid h-full max-w-6xl items-center py-12 md:px-4">
+          <div
             className="mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center text-center sm:max-w-3xl xl:max-w-6xl"
-            style={{
-              y: useDesktopParallax
-                ? desktopFirstY
-                : reduceMotion
-                  ? 0
-                  : isMobileViewport
-                    ? mobileFirstY
-                    : isMediumLargeViewport
-                      ? mediumLargeFirstY
-                    : compactFirstY,
-            }}
+            ref={firstPanelRef}
           >
-            <motion.div
+            <div
               className="mx-auto flex w-full max-w-[22rem] flex-col items-center text-center sm:max-w-2xl"
-              style={{
-                y: useDesktopParallax ? desktopFirstTextY : 0,
-              }}
+              ref={firstTextRef}
             >
               <TextPill style="glass" className="mb-3">
                 {insecuritySection.eyebrow}
@@ -164,24 +238,16 @@ export function UnifiedStoryPanel({
                   </CTAButton>
                 </div>
               ) : null}
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="mt-16 w-full xl:max-w-none"
-              style={{
-                y: useDesktopParallax ? desktopAnalysisCardsY : 0,
-              }}
-            >
+            <div className="mt-16 w-full xl:max-w-none" ref={analysisCardsRef}>
               <MediaCarousel align="start" cards={analysisCards} />
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          <motion.div
+          <div
             className="absolute inset-x-0 top-1/2 mx-auto flex w-full max-w-6xl -translate-y-1/2 flex-col items-center px-4 text-center"
-            style={{
-              opacity: reduceMotion ? 1 : secondOpacity,
-              y: useDesktopParallax ? desktopSecondY : reduceMotion ? 0 : secondY,
-            }}
+            ref={secondPanelRef}
           >
             <div className="relative z-10 flex flex-col items-center">
               <h2 className="max-w-xs text-balance text-[2rem] font-light leading-none tracking-normal sm:max-w-2xl sm:text-5xl lg:text-6xl">
@@ -205,41 +271,29 @@ export function UnifiedStoryPanel({
             </div>
 
             {mindsetCards[0] ? (
-              <motion.div
+              <div
                 className="pointer-events-none absolute left-10 top-[-210px] hidden xl:block lg:left-12"
-                style={{
-                  y: useDesktopParallax
-                    ? desktopFirstMindsetCardY
-                    : reduceMotion
-                      ? 0
-                      : 0,
-                }}
+                ref={firstMindsetCardRef}
               >
                 <MindsetCardPanel
                   className="w-[360px] lg:w-[390px]"
                   card={mindsetCards[0]}
                 />
-              </motion.div>
+              </div>
             ) : null}
 
             {mindsetCards[1] ? (
-              <motion.div
+              <div
                 className="pointer-events-none absolute right-10 top-[120px] hidden xl:block lg:right-12"
-                style={{
-                  y: useDesktopParallax
-                    ? desktopSecondMindsetCardY
-                    : reduceMotion
-                      ? 0
-                      : 0,
-                }}
+                ref={secondMindsetCardRef}
               >
                 <MindsetCardPanel
                   className="w-[360px] lg:w-[390px]"
                   card={mindsetCards[1]}
                 />
-              </motion.div>
+              </div>
             ) : null}
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
@@ -371,94 +425,4 @@ function useResponsiveStoryVideo() {
   }, []);
 
   return source;
-}
-
-function useStoryScrollProgress(sectionRef: RefObject<HTMLElement | null>) {
-  const progress = useMotionValue(0);
-  const smoothProgress = useSpring(progress, {
-    stiffness: 90,
-    damping: 26,
-    mass: 0.18,
-  });
-
-  useEffect(() => {
-    let frame = 0;
-
-    function updateProgress() {
-      const section = sectionRef.current;
-
-      if (!section) {
-        return;
-      }
-
-      const rect = section.getBoundingClientRect();
-      const scrollableDistance = rect.height + window.innerHeight;
-      const rawProgress = (window.innerHeight - rect.top) / scrollableDistance;
-
-      progress.set(Math.min(Math.max(rawProgress, 0), 1));
-    }
-
-    function requestUpdate() {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(updateProgress);
-    }
-
-    updateProgress();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-    };
-  }, [progress, sectionRef]);
-
-  return smoothProgress;
-}
-
-function useStickyPanelScrollProgress(
-  sectionRef: RefObject<HTMLElement | null>,
-) {
-  const progress = useMotionValue(0);
-  const smoothProgress = useSpring(progress, {
-    stiffness: 100,
-    damping: 28,
-    mass: 0.16,
-  });
-
-  useEffect(() => {
-    let frame = 0;
-
-    function updateProgress() {
-      const section = sectionRef.current;
-
-      if (!section) {
-        return;
-      }
-
-      const rect = section.getBoundingClientRect();
-      const stickyDistance = Math.max(rect.height - window.innerHeight, 1);
-      const rawProgress = -rect.top / stickyDistance;
-
-      progress.set(Math.min(Math.max(rawProgress, 0), 1));
-    }
-
-    function requestUpdate() {
-      window.cancelAnimationFrame(frame);
-      frame = window.requestAnimationFrame(updateProgress);
-    }
-
-    updateProgress();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-    };
-  }, [progress, sectionRef]);
-
-  return smoothProgress;
 }
