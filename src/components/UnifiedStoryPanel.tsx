@@ -36,6 +36,7 @@ export function UnifiedStoryPanel({
   const sectionRef = useRef<HTMLElement | null>(null);
   const reduceMotion = useReducedMotion();
   const isMobileViewport = useIsMobileViewport();
+  const isMediumLargeViewport = useIsMediumLargeViewport();
   const isXlViewport = useIsXlViewport();
   const videoSource = useResponsiveStoryVideo();
   const scrollYProgress = useStoryScrollProgress(sectionRef);
@@ -51,6 +52,11 @@ export function UnifiedStoryPanel({
     panelScrollProgress,
     [0.02, 0.22, 0.46],
     [148, 0, -620],
+  );
+  const mediumLargeFirstY = useTransform(
+    panelScrollProgress,
+    [0.02, 0.22, 0.48],
+    [132, 0, -760],
   );
   const secondY = useTransform(scrollYProgress, [0.42, 0.88], [70, -30]);
   const secondOpacity = useTransform(
@@ -131,6 +137,8 @@ export function UnifiedStoryPanel({
                   ? 0
                   : isMobileViewport
                     ? mobileFirstY
+                    : isMediumLargeViewport
+                      ? mediumLargeFirstY
                     : compactFirstY,
             }}
           >
@@ -306,6 +314,29 @@ function useIsMobileViewport() {
   }, []);
 
   return isMobileViewport;
+}
+
+function useIsMediumLargeViewport() {
+  const [isMediumLargeViewport, setIsMediumLargeViewport] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia(
+      "(min-width: 768px) and (max-width: 1279px)",
+    );
+
+    function syncViewport() {
+      setIsMediumLargeViewport(query.matches);
+    }
+
+    syncViewport();
+    query.addEventListener("change", syncViewport);
+
+    return () => {
+      query.removeEventListener("change", syncViewport);
+    };
+  }, []);
+
+  return isMediumLargeViewport;
 }
 
 function useResponsiveStoryVideo() {
