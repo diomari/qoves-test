@@ -1,7 +1,9 @@
+import {
+  DeferredPersonalizedPlanSection,
+  DeferredStorySection,
+} from "@/components/sections/HomeDeferredSections";
 import { FAQSection } from "@/components/sections/FAQ";
 import { HeroSection } from "@/components/sections/Hero";
-import { PersonalizedPlanSection } from "@/components/sections/PersonalizedPlan";
-import { StorySection } from "@/components/sections/Story";
 
 import styles from "./HomePage.module.scss";
 
@@ -10,10 +12,10 @@ export default function Home() {
     <main className={styles.main}>
       <div className={styles.pageRightBorder}></div>
       <div className={styles.pageLeftBorder}></div>
-      <PersonalizedPlanSection />
+      <DeferredPersonalizedPlanSection />
       <HeroSection />
       <FAQSection />
-      <StorySection />
+      <DeferredStorySection />
     </main>
   );
 }

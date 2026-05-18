@@ -1,43 +1,106 @@
 .main {
-    min-height: 100vh;
-    background: var(--color-paper);
-    color: var(--color-ink);
+  min-height: 100vh;
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.planPlaceholder,
+.storyPlaceholder {
+  width: 100%;
+}
+
+.planPlaceholder {
+  min-height: 56rem;
+}
+
+.storyPlaceholder {
+  min-height: 80rem;
 }
 
 .pageRightBorder {
-    position: fixed;
-    top: 0;
-    left: 98vw;
-    width: 1px;
-    height: 100%;
-    z-index: 1000;
-    border-right: solid 1px rgba(255, 255, 255, 0.1);
+  position: fixed;
+  top: 0;
+  left: 98vw;
+  width: 1px;
+  height: 100%;
+  z-index: 1000;
+  border-right: solid 1px rgba(255, 255, 255, 0.1);
 }
 
 .pageLeftBorder {
-    position: fixed;
-    top: 0;
-    left: 2vw;
-    width: 1px;
-    height: 100%;
-    z-index: 1000;
-    border-right: solid 1px rgba(255, 255, 255, 0.08);
+  position: fixed;
+  top: 0;
+  left: 2vw;
+  width: 1px;
+  height: 100%;
+  z-index: 1000;
+  border-right: solid 1px rgba(255, 255, 255, 0.08);
 }
 
 @media (min-width: 768px) {
-    .pageLeftBorder {
-        left: 1vw;
-    }
-    .pageRightBorder {
-        right: 99vw;
-    }
+  .planPlaceholder {
+    min-height: 64rem;
+  }
+
+  .storyPlaceholder {
+    min-height: 96rem;
+  }
+
+  .pageLeftBorder {
+    left: 1vw;
+  }
+
+  .pageRightBorder {
+    right: 99vw;
+  }
 }
 
 @media (min-width: 1280px) {
-    .pageLeftBorder {
-        display: none;
-    }
-    .pageRightBorder {
-        display: none;
-    }
+  .planPlaceholder {
+    min-height: 68rem;
+  }
+
+  .storyPlaceholder {
+    min-height: 120rem;
+  }
+
+  .pageLeftBorder,
+  .pageRightBorder {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .planPlaceholder,
+  .storyPlaceholder {
+    content-visibility: auto;
+  }
+
+  .planPlaceholder {
+    contain-intrinsic-size: 56rem;
+  }
+
+  .storyPlaceholder {
+    contain-intrinsic-size: 80rem;
+  }
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .planPlaceholder {
+    contain-intrinsic-size: 64rem;
+  }
+
+  .storyPlaceholder {
+    contain-intrinsic-size: 96rem;
+  }
+}
+
+@media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+  .planPlaceholder {
+    contain-intrinsic-size: 68rem;
+  }
+
+  .storyPlaceholder {
+    contain-intrinsic-size: 120rem;
+  }
 }

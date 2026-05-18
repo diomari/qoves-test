@@ -259,10 +259,10 @@ function AnimatedCollapse({
 
   return (
     <div
-      aria-hidden={!open}
       className={styles.collapse}
       data-faq-collapse
       data-faq-open={open ? "true" : "false"}
+      inert={open ? undefined : true}
       ref={ref}
     >
       {children}
