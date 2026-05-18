@@ -85,6 +85,11 @@ export function StorySection() {
         return;
       }
 
+      const stickyHeight = sticky.clientHeight;
+      const firstPanelHeight = firstPanel.offsetHeight;
+      const firstPanelExitY = -(stickyHeight / 2 + firstPanelHeight / 2 + 100);
+      const secondPanelEnterY = isXlViewport ? 72 : 48;
+
       gsap.killTweensOf([
         mediaLayer,
         firstPanel,
@@ -109,14 +114,6 @@ export function StorySection() {
         );
         return;
       }
-
-      const stickyHeight = sticky.clientHeight;
-      const firstPanelExitY = -(
-        stickyHeight / 2 +
-        firstPanel.offsetHeight / 2 +
-        100
-      );
-      const secondPanelEnterY = isXlViewport ? 72 : 48;
 
       const storyTimeline = gsap.timeline({
         defaults: { ease: "none" },

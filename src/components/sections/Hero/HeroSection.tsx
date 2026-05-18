@@ -1,4 +1,5 @@
 import { getImageProps } from "next/image";
+import { preload } from "react-dom";
 
 import { HeroSvgPanels, type HeroSvgPanel } from "./HeroSvgPanels";
 import { TextPill } from "@/components/shared/TextPill";
@@ -76,7 +77,7 @@ function HeroFigure({ media }: { media?: SectionContent["media"] }) {
   const imageSizes = "(min-width: 768px) 760px, 360px";
   const responsiveSources = media.responsiveSources ?? [];
   const desktopSource = responsiveSources.find(
-    (source) => source.media === "(min-width: 760px)",
+    (source) => source.media === "(min-width: 1280px)",
   );
   const tabletSource = responsiveSources.find(
     (source) => source.media === "(min-width: 768px)",
@@ -113,6 +114,15 @@ function HeroFigure({ media }: { media?: SectionContent["media"] }) {
     width: media.width,
   });
 
+  if (media.priority) {
+    preload(media.src, {
+      as: "image",
+      fetchPriority: "high",
+      imageSizes,
+      imageSrcSet: mobileImageProps.srcSet,
+    });
+  }
+
   return (
     <div className={styles.figure}>
       <picture className={styles.figurePicture}>
@@ -126,6 +136,9 @@ function HeroFigure({ media }: { media?: SectionContent["media"] }) {
           {...mobileImageProps}
           alt={media.alt ?? "Facial analysis portrait"}
           className={styles.figureImage}
+          decoding="async"
+          fetchPriority="high"
+          loading="eager"
         />
       </picture>
     </div>

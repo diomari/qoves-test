@@ -10,9 +10,11 @@ export const ppNeueMontrealMedium = localFont({
   src: "../assets/fonts/PPNeueMontreal-Medium.woff2",
   display: "swap",
   weight: "500",
+  preload: false,
 });
 
 export const zagmaMonoBook = localFont({
   src: "../assets/fonts/F37ZagmaMonoTrial-Book.woff2",
   display: "swap",
+  preload: false,
 });
