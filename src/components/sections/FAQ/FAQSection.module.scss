@@ -1,0 +1,57 @@
+.section {
+    background: var(--color-white);
+    padding: 4rem 0;
+}
+
+.inner {
+    max-width: 430px;
+}
+
+.intro {
+    text-align: center;
+}
+
+.pill {
+    margin: 0 auto 1rem;
+}
+
+.title {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: var(--section-title-font-size);
+    font-weight: 300;
+    line-height: var(--section-title-line-height);
+    letter-spacing: 0;
+    text-wrap: balance;
+}
+
+.highlight {
+    color: #8ca2aa;
+}
+
+.description {
+    max-width: 20rem;
+    margin: 1.25rem auto 0;
+    color: rgb(17 24 23 / 62%);
+    font-size: var(--section-body-font-size);
+    line-height: var(--section-body-line-height);
+    text-wrap: pretty;
+}
+
+.accordion {
+    margin-top: 2.25rem;
+}
+
+@media (min-width: 640px) {
+    .section {
+        padding: 6rem 0;
+    }
+
+    .inner {
+        max-width: 48rem;
+    }
+
+    .description {
+        max-width: 28rem;
+    }
+}

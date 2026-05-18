@@ -1,0 +1,62 @@
+.button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-height: 2.75rem;
+    padding-left: 1.2rem;
+    padding-right: 3.4rem;
+    border-radius: 7px;
+    background: rgb(255 255 255 / 20%);
+    color: #fff;
+    box-shadow: var(--shadow-glass);
+    backdrop-filter: blur(12px);
+    box-shadow:
+        var(--shadow-glass),
+        inset 0 0 0 1px rgb(255 255 255 / 20%);
+    font-size: 16px;
+    text-decoration: none;
+    position: relative;
+    transition:
+        background-color 300ms ease,
+        box-shadow 300ms ease,
+        transform 300ms ease;
+}
+
+.button:hover {
+    background: rgb(255 255 255 / 30%);
+}
+
+.button:focus {
+    outline: none;
+}
+
+.button:focus-visible {
+    box-shadow:
+        var(--shadow-glass),
+        inset 0 0 0 1px rgb(255 255 255 / 25%),
+        0 0 0 2px #fff;
+}
+
+.label {
+    display: inline-flex;
+}
+
+.iconWrap {
+    display: grid;
+    position: absolute;
+    right: 4px;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 6px;
+    background: rgb(255 255 255 / 16%);
+    transition:
+        transform 300ms ease,
+        background-color 300ms ease;
+}
+
+.button:hover .iconWrap,
+.button:focus-visible .iconWrap {
+    transform: translateX(0.125rem);
+    background: rgb(255 255 255 / 24%);
+}

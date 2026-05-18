@@ -1,24 +1,20 @@
 import Link from "next/link";
 
+import { cn } from "@/lib/cn";
 import { ppNeueMontrealMedium } from "@/lib/fonts";
+
+import styles from "./ErrorState.module.scss";
 
 export default function NotFound() {
   return (
-    <main className="grid min-h-screen place-items-center bg-paper px-6 text-center text-ink">
-      <div className="max-w-sm">
-        <p className="text-xs uppercase tracking-[0.22em] text-ink/45">
-          404
-        </p>
-        <h1 className="mt-4 text-3xl font-light leading-tight">
-          This page does not exist.
-        </h1>
-        <p className="mt-4 text-sm leading-6 text-ink/62">
+    <main className={styles.main}>
+      <div className={styles.card}>
+        <p className={styles.eyebrow}>404</p>
+        <h1 className={styles.title}>This page does not exist.</h1>
+        <p className={styles.body}>
           The facial analysis landing page is available from the home route.
         </p>
-        <Link
-          className={`${ppNeueMontrealMedium.className} mt-7 inline-flex min-h-11 items-center rounded-[7px] bg-ink px-5 text-sm text-white transition hover:bg-ink/86 focus:outline-none focus-visible:ring-2 focus-visible:ring-ink/40`}
-          href="/"
-        >
+        <Link className={cn(ppNeueMontrealMedium.className, styles.button)} href="/">
           Back home
         </Link>
       </div>

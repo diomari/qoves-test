@@ -1,0 +1,347 @@
+.section {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    min-height: 620px;
+    background: #9aaeb5;
+    color: #fff;
+}
+
+.gradientBase,
+.gradientGlow,
+.gradientHighlight,
+.gradientShade,
+.topFade {
+    pointer-events: none;
+    position: absolute;
+}
+
+.gradientBase,
+.gradientGlow,
+.gradientHighlight,
+.gradientShade {
+    inset: 0;
+}
+
+.gradientBase {
+    background: linear-gradient(180deg, #9ba3a6 0%, #9d9a97 52%, #8a8682 100%);
+}
+
+.gradientGlow {
+    background: radial-gradient(
+        circle at 50% 42%,
+        rgba(202, 188, 181, 0.48) 0%,
+        rgba(191, 177, 170, 0.34) 20%,
+        rgba(171, 160, 154, 0.18) 38%,
+        rgba(154, 174, 181, 0.06) 58%,
+        transparent 78%
+    );
+}
+
+.gradientHighlight {
+    background: radial-gradient(
+        circle at 50% 18%,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.03) 24%,
+        transparent 44%
+    );
+}
+
+.gradientShade {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.02) 0%,
+        rgba(149, 138, 132, 0.06) 48%,
+        rgba(77, 79, 81, 0.18) 100%
+    );
+}
+
+.topFade {
+    inset-inline: 0;
+    top: 0;
+    z-index: 10;
+    height: 7rem;
+    background: linear-gradient(180deg, rgba(132, 140, 144, 0.14), transparent);
+}
+
+.container {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    min-height: 41.25rem;
+    width: 100%;
+    max-width: 72rem;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    padding: 5rem 1rem 0;
+    text-align: center;
+}
+
+.pill {
+    margin-bottom: 1.25rem;
+}
+
+.copy {
+    padding-inline: 1rem;
+    margin-bottom: 50px;
+}
+
+.title {
+    margin: 0 0 0.5rem;
+    max-width: 100%;
+    font-size: var(--section-title-font-size);
+    line-height: var(--section-title-line-height);
+    font-weight: 400;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+}
+
+.titleHighlight {
+    opacity: 0.5;
+}
+
+.body {
+    max-width: 100%;
+    margin: 0.75rem 0 0;
+    font-size: var(--section-body-font-size);
+    line-height: var(--section-body-line-height);
+    color: rgb(255 255 255 / 70%);
+    text-wrap: pretty;
+}
+
+.figureWrap {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    height: 27.25rem;
+    margin-top: auto;
+    display: grid;
+}
+
+.figure {
+    pointer-events: none;
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    margin-inline: auto;
+    z-index: 500;
+}
+
+.figurePicture {
+    display: block;
+}
+
+.figureImage {
+    display: block;
+    width: 22.5rem;
+    height: auto;
+    object-fit: contain;
+    object-position: bottom;
+}
+
+.curveChartPanel {
+    left: 0;
+    top: 0;
+    width: 45%;
+}
+
+.blocksPanel {
+    left: 0;
+    top: 110px;
+    bottom: 6rem;
+    width: 41%;
+}
+
+.squareChartPanel {
+    left: 0;
+    bottom: 7rem;
+    width: 36%;
+    top: 176px;
+}
+
+.scatterPlotPanel {
+    right: 0;
+    top: 0;
+    width: 34%;
+}
+
+.togglePanel {
+    right: 0;
+    top: 142px;
+    width: 34%;
+}
+
+.levelPanel {
+    right: 0;
+    top: 208px;
+    width: 36%;
+}
+
+@media (min-width: 768px) {
+    .gradientBase {
+        background: linear-gradient(
+            180deg,
+            #a3b2b9 0%,
+            #9eadb3 32%,
+            #94a1a6 100%
+        );
+    }
+
+    .gradientGlow {
+        background: radial-gradient(
+            ellipse at 50% 38%,
+            rgba(205, 189, 181, 0.56) 0%,
+            rgba(193, 178, 170, 0.42) 16%,
+            rgba(176, 163, 156, 0.24) 30%,
+            rgba(156, 168, 173, 0.08) 44%,
+            transparent 58%
+        );
+    }
+
+    .gradientHighlight {
+        background: radial-gradient(
+            ellipse at 50% 20%,
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0.04) 16%,
+            transparent 30%
+        );
+    }
+
+    .gradientShade {
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.02) 0%,
+            rgba(154, 174, 181, 0.02) 36%,
+            rgba(89, 101, 106, 0.12) 100%
+        );
+    }
+
+    .title {
+        margin-bottom: 0.75rem;
+    }
+
+    .figureImage {
+        width: 28rem;
+    }
+
+    .curveChartPanel {
+        left: 0;
+        top: -30px;
+        width: 45%;
+    }
+
+    .figureWrap {
+        max-width: 440px;
+    }
+
+    .blocksPanel {
+        left: 0;
+        top: 110px;
+        bottom: 6rem;
+        width: 41%;
+    }
+
+    .squareChartPanel {
+        left: 0;
+        width: 36%;
+        top: 194px;
+    }
+
+    .scatterPlotPanel {
+        right: 0;
+        top: -30px;
+        width: 34%;
+    }
+
+    .togglePanel {
+        right: 0;
+        top: 152px;
+        width: 34%;
+    }
+
+    .levelPanel {
+        right: 0;
+        top: 238px;
+        width: 36%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .container {
+        padding-top: 10px;
+    }
+
+    .section {
+        min-height: 53.75rem;
+    }
+
+    .container {
+        min-height: 53.75rem;
+        padding-top: 7rem;
+    }
+
+    .figureWrap {
+        max-width: 73.75rem;
+        height: 47.5rem;
+    }
+
+    .figureImage {
+        width: 42rem;
+    }
+
+    .curveChartPanel {
+        left: calc(50% - 402px);
+        top: 118px;
+        width: 282px;
+    }
+
+    .levelPanel {
+        right: calc(50% - 670px);
+        top: 118px;
+        width: 320px;
+    }
+
+    .squareChartPanel {
+        left: calc(50% - 682px);
+        top: 118px;
+        bottom: auto;
+        width: 270px;
+    }
+
+    .blocksPanel {
+        left: calc(50% - 400px);
+        top: 322px;
+        bottom: auto;
+        width: 262px;
+    }
+
+    .togglePanel {
+        left: calc(50% + 350px);
+        top: 280px;
+        bottom: auto;
+        width: 272px;
+    }
+
+    .scatterPlotPanel {
+        right: calc(50% - 340px);
+        top: 118px;
+        width: 260px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        padding-top: 60px;
+        height: 420px;
+    }
+    .figureWrap {
+        max-width: 77.5rem;
+    }
+
+    .figureImage {
+        width: 39.5rem;
+    }
+}

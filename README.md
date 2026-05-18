@@ -1,13 +1,14 @@
 # Qoves Frontend Test
 
-Mobile-first Next.js scaffold for a single-page beauty-tech landing page with video-ready media sections, restrained motion, accessible accordions, and responsive layout foundations.
+Single-page Next.js landing page for Qoves with responsive media, GSAP-driven motion, accessible FAQ interactions, and a section-based component architecture.
 
 ## Stack
 
 - Next.js App Router
+- React
 - TypeScript
-- Tailwind CSS v4
-- Motion for React
+- Sass / SCSS Modules
+- GSAP + `@gsap/react`
 
 ## Commands
 
@@ -19,14 +20,49 @@ npm run typecheck
 npm run build
 ```
 
-`npm run dev` clears the generated `.next` cache before starting. This prevents stale build artifacts from causing Next's dev-only "missing required error components" refresh loop after switching between `build` and `dev`.
+### Dev server
+- `npm run dev` runs on `0.0.0.0:3000`
+- LAN/mobile URL uses your machine's local IP, e.g. `http://<your-local-ip>:3000`
+- `.next` is cleared before dev/build to avoid stale Next cache issues
 
 ## Structure
 
 - `src/app` - App Router entry, global styles, page composition
-- `src/components` - focused landing-page primitives
-- `src/content` - typed page copy, FAQ groups, carousel content
-- `src/lib` - small shared utilities
-- `public/images` and `public/videos` - local media slots
+- `src/components/sections` - folder-per-section organization, e.g. `Hero/HeroSection.tsx`
+- `src/components/shared` - folder-per-component reusable UI, e.g. `CTAButton/CTAButton.tsx`
+- `src/content` - typed, serializable page content/data
+- `src/lib` - utilities, fonts, hooks
+- `public/images` and `public/videos` - local media assets
 
-The hero and media sections are video-ready. They currently render poster images with empty `src` values to avoid development 404s; replace those `src` values in `src/content/landing.ts` when final `.mp4` assets are available.
+## Architecture notes
+
+- `src/app/page.tsx` should only compose section components
+- content files should stay presentation-agnostic and contain no JSX
+- shared UI belongs in `src/components/shared`
+- section-specific composition belongs in `src/components/sections`
+- animations should use GSAP via `useGSAP`
+- styling uses colocated SCSS modules for component-local concerns
+- `src/app/globals.css` should stay focused on tokens, reset/base styles, and rare global behavior
+
+## Media notes
+
+The project uses responsive local media from `public/images` and `public/videos`.
+Optimize large assets before shipping, especially:
+- hero images
+- PNG cutouts
+- desktop video variants
+- fonts (prefer `woff2`)
+
+## Quality checks
+
+Before merging meaningful changes, run:
+
+```bash
+npm run typecheck
+npm run lint
+npm run build
+```
+
+## Contributor guidance
+
+See `AGENTS.md` for project conventions, performance rules, accessibility expectations, and front-end architecture guidance.

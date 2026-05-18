@@ -1,12 +1,20 @@
 export type MediaAsset = {
   type: "image" | "video";
   src: string;
+  width?: number;
+  height?: number;
   poster?: string;
   responsivePoster?: {
     mobile: string;
     desktop: string;
     breakpoint?: number;
   };
+  responsiveSources?: Array<{
+    media: string;
+    src: string;
+    width: number;
+    height: number;
+  }>;
   alt: string;
   priority?: boolean;
 };
@@ -53,7 +61,23 @@ export const heroContent: SectionContent = {
   body: "Every face is unique. We analyze 163 aspects of your face to understand your personal facial aesthetics.",
   media: {
     type: "image",
-    src: "/images/female-top.png",
+    src: "/images/female-top.webp",
+    width: 539,
+    height: 696,
+    responsiveSources: [
+      {
+        media: "(min-width: 1280px)",
+        src: "/images/female-top-xl.webp",
+        width: 1320,
+        height: 1092,
+      },
+      {
+        media: "(min-width: 768px)",
+        src: "/images/female-top-md.webp",
+        width: 1152,
+        height: 1397,
+      },
+    ],
     alt: "Facial analysis preview",
     priority: true,
   },
@@ -151,7 +175,7 @@ export const insecuritySection: SectionContent = {
   body: "Get your answer back from a practical and informational plan based on 2000+ academic studies.",
   cta: {
     label: "Start your glow-up",
-    href: "#faq",
+    href: "#",
   },
   media: {
     type: "video",
@@ -167,7 +191,7 @@ export const analysisCards: CarouselCard[] = [
     body: "Considers diet, climate, stress, sleep, and habits.",
     media: {
       type: "image",
-      src: "/images/analysis-lifestyle-@2x.png",
+      src: "/images/analysis-lifestyle-@2x.webp",
       alt: "Lifestyle factor preview",
     },
   },
@@ -176,7 +200,7 @@ export const analysisCards: CarouselCard[] = [
     body: "Adapts to regional and societal ideals.",
     media: {
       type: "image",
-      src: "/images/analysis-cultural-@2x.png",
+      src: "/images/analysis-cultural-@2x.webp",
       alt: "Cultural beauty standards preview",
     },
   },
@@ -185,14 +209,15 @@ export const analysisCards: CarouselCard[] = [
     body: "Takes into account genetic factors and how they might impact your facial aesthetics.",
     media: {
       type: "image",
-      src: "/images/analysis-genetic-@2x.png",
+      src: "/images/analysis-genetic-@2x.webp",
       alt: "Genetic factor preview",
     },
   },
 ];
 
 export const mindsetSection: SectionContent = {
-  heading: "Is it vain to care about your appearance?",
+  heading: "Is it vain to care",
+  headingHighlight: "about your appearance?",
   body: "Wanting to feel better walking into rooms is not shallow. The goal is to notice what is within your control and build a plan that feels measured, realistic, and private.",
   media: {
     type: "video",
@@ -214,9 +239,10 @@ export const mindsetCards: MindsetCard[] = [
   {
     title: "The key is approaching it intelligently",
     items: [
-      "Use evidence instead of self-criticism",
-      "Separate observation from emotion",
-      "Focus on what can be changed or improved",
+      "Not chasing unrealistic standards",
+      "Not trying to look like someone else",
+      "Not seeking perfection ",
+      "Aiming only for a better version of yourself",
     ],
   },
 ];

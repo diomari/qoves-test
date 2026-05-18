@@ -1,11 +1,15 @@
-import { FAQSection } from "@/components/sections/FAQSection";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { PersonalizedPlanSection } from "@/components/sections/PersonalizedPlanSection";
-import { StorySection } from "@/components/sections/StorySection";
+import { FAQSection } from "@/components/sections/FAQ";
+import { HeroSection } from "@/components/sections/Hero";
+import { PersonalizedPlanSection } from "@/components/sections/PersonalizedPlan";
+import { StorySection } from "@/components/sections/Story";
+
+import styles from "./HomePage.module.scss";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-paper text-ink">
+    <main className={styles.main}>
+      <div className={styles.pageRightBorder}></div>
+      <div className={styles.pageLeftBorder}></div>
       <PersonalizedPlanSection />
       <HeroSection />
       <FAQSection />

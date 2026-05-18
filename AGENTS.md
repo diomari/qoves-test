@@ -1,10 +1,10 @@
 # AGENTS.md
 
 ## Project overview
-- Stack: Next.js App Router, React, TypeScript, Tailwind CSS v4, GSAP
+- Stack: Next.js App Router, React, TypeScript, Sass / SCSS Modules, GSAP
 - Package manager: npm
 - Main route: `src/app/page.tsx`
-- Styling approach: Tailwind-first. Do not introduce SCSS unless explicitly requested.
+- Styling approach: SCSS modules for component-local styling, CSS variables and base styles in `src/app/globals.css`
 - Animation approach: GSAP with `@gsap/react` `useGSAP`
 
 ## Key commands
@@ -21,15 +21,25 @@
 
 ### Sections
 - `src/components/sections`
-  - `PersonalizedPlanSection.tsx`
-  - `HeroSection.tsx`
-  - `FAQSection.tsx`
-  - `StorySection.tsx`
+  - organize sections as folder-per-feature
+  - examples:
+    - `Hero/HeroSection.tsx`
+    - `FAQ/FAQSection.tsx`
+    - `Story/StorySection.tsx`
+    - `PersonalizedPlan/PersonalizedPlanSection.tsx`
+  - keep section styles and section-only helpers/assets colocated inside the same folder
 
 ### Shared components
 - `src/components/shared`
   - reusable UI primitives and repeated elements only
-  - examples: `TextPill`, `CTAButton`, `FAQAccordion`, `Section`, `MediaCarousel`
+  - organize shared UI as folder-per-component
+  - examples:
+    - `TextPill/TextPill.tsx`
+    - `CTAButton/CTAButton.tsx`
+    - `FAQAccordion/FAQAccordion.tsx`
+    - `Section/Section.tsx`
+    - `MediaCarousel/MediaCarousel.tsx`
+  - shared component styles should live in colocated `*.module.scss` files
 
 ### Content/data
 - `src/content/landing.ts`
@@ -52,17 +62,20 @@
 - Prefer aliases like `@/components/...` over deep relative imports
 
 ## Styling rules
-- Tailwind is the default and preferred styling system
+- SCSS modules are the default and preferred styling system
+- Keep styles colocated with the component they serve
 - Keep global CSS limited to:
-  - theme tokens
+  - theme tokens / CSS variables
   - reset/base styles
   - global selection/scroll behavior
   - rare global utilities
-- Do not add SCSS unless there is a clear maintainability reason approved by the team
-- If class strings become too long:
+- Prefer clear local class names over deeply nested selectors
+- If a component stylesheet grows too large:
   1. extract smaller components
   2. extract shared primitives
-  3. only then consider alternative styling abstraction
+  3. reduce selector complexity before adding more variants
+- Do not reintroduce Tailwind utility classes for component styling
+- Do not add another styling system casually
 
 ## Animation rules
 - Use GSAP with `useGSAP`
@@ -121,8 +134,12 @@
   - `cta.href`
 
 ## File naming rules
-- Sections: `SomethingSection.tsx`
-- Shared components: concise UI names like `TextPill.tsx`, `CTAButton.tsx`
+- Section folders: `Something/`
+- Section entry files: `SomethingSection.tsx`
+- Shared component folders: `Something/`
+- Shared component entry files: concise UI names like `TextPill.tsx`, `CTAButton.tsx`
+- Re-export files: `index.ts`
+- Component styles: `Something.module.scss`
 - Hooks: `useSomething.ts`
 - Content: plain `.ts` files
 
@@ -142,7 +159,6 @@
 
 ## What to avoid
 - Do not reintroduce JSX into content/data files
-- Do not add another styling system casually
 - Do not create oversized section components when smaller internal components would help
 - Do not add animation libraries besides GSAP
 - Do not add global styles for component-local concerns

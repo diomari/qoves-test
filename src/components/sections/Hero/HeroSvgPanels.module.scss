@@ -1,0 +1,25 @@
+.root {
+    position: relative;
+    inset: 0;
+    grid-template-columns: 1fr 1fr;
+}
+
+.panel {
+    pointer-events: none;
+    position: absolute;
+    cursor: default;
+}
+
+.panelSvg {
+    pointer-events: none;
+    display: block;
+    width: 100%;
+    height: auto;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .panel {
+        pointer-events: auto;
+    }
+}

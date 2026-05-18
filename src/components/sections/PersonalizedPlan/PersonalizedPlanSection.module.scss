@@ -1,0 +1,237 @@
+.section {
+    position: relative;
+    display: none;
+    overflow: hidden;
+    min-height: 100vh;
+    background: #fbfbfa;
+    color: var(--color-ink);
+}
+
+.container {
+    position: relative;
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
+    flex-direction: column;
+    padding: 3rem 2.5rem 6rem;
+    border-left: 1px solid rgba(0, 0, 0, 0.05);
+    border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.header {
+    max-width: 56rem;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.pill {
+    margin-bottom: 1.5rem;
+}
+
+.title {
+    margin: 0;
+    color: #233134;
+    font-size: var(--section-title-font-size);
+    line-height: var(--section-title-line-height);
+    letter-spacing: -0.04em;
+    text-wrap: balance;
+}
+
+.highlight {
+    color: #9aaeb5;
+}
+
+.description {
+    max-width: 36rem;
+    margin: 1.75rem auto 0;
+    color: rgb(17 24 23 / 62%);
+    font-size: var(--section-body-font-size);
+    line-height: var(--section-body-line-height);
+}
+
+.visualGrid {
+    position: relative;
+    display: grid;
+    flex: 1;
+    grid-template-columns: minmax(320px, 520px) minmax(260px, 360px) minmax(
+            320px,
+            520px
+        );
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    margin-top: 4rem;
+}
+
+.connectorColumn {
+    position: relative;
+    display: flex;
+    height: 100%;
+    min-height: 35rem;
+    flex-direction: column;
+    justify-content: center;
+    margin-inline: -1px;
+}
+
+.connectorTop {
+    position: relative;
+    height: 230px;
+    border-right: 1px solid #b8cbd1;
+    border-bottom: 1px solid #b8cbd1;
+    border-radius: 0 0 18px 0;
+}
+
+.connectorBottom {
+    position: relative;
+    height: 300px;
+    margin-top: 2.5rem;
+    border-top: 1px solid #b8cbd1;
+    border-left: 1px solid #b8cbd1;
+    border-radius: 18px 0 0 0;
+}
+
+.stepsGrid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #edf2f3;
+}
+
+.stepButton {
+    position: relative;
+    overflow: hidden;
+    min-height: 160px;
+    padding: 1.25rem;
+    border: 1px solid #edf2f3;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    transition:
+        color 300ms ease,
+        border-color 300ms ease,
+        box-shadow 300ms ease;
+}
+
+.stepButton:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 2px #9aaeb5,
+        0 0 0 4px #fbfbfa;
+}
+
+.stepButtonBackground {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #8f9694 0%, #9aaeb5 100%);
+}
+
+.stepIndex {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 9999px;
+    background: #9aaeb5;
+    color: #fff;
+    font-size: 0.75rem;
+    transition:
+        background-color 300ms ease,
+        color 300ms ease;
+}
+
+.stepIndexActive {
+    background: rgb(255 255 255 / 22%);
+}
+
+.stepText {
+    position: relative;
+    z-index: 1;
+    max-width: 14rem;
+    margin: 3rem 0 0;
+    font-size: 1.3125rem;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+}
+
+.imageCard {
+    margin: 0;
+    padding: 0.75rem;
+    border: 1px solid #d4e2e6;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.imageFrame {
+    position: relative;
+    display: flex;
+    aspect-ratio: 657 / 711;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #b8cdd3;
+}
+
+.image {
+    object-fit: cover;
+    object-position: bottom;
+}
+
+.imageLabel {
+    pointer-events: none;
+    position: absolute;
+    inset-inline: 0;
+    top: 1.25rem;
+    color: #fff;
+    font-size: 0.9375rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.signalDot {
+    pointer-events: none;
+    position: absolute;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    box-shadow: 0 0 0 3px rgb(154 174 181 / 20%);
+}
+
+.beforeTopSignal {
+    top: -0.375rem;
+    left: 48%;
+}
+
+.beforeBottomSignal {
+    bottom: -0.375rem;
+    left: 52%;
+}
+
+.connectorTopSignal {
+    bottom: -0.375rem;
+    left: 18%;
+}
+
+.connectorBottomSignal {
+    top: -0.375rem;
+    left: 42%;
+}
+
+@media (min-width: 1024px) {
+    .section {
+        display: block;
+    }
+}
+
+@media (min-width: 1280px) {
+    .container {
+        padding-inline: 4rem;
+    }
+}

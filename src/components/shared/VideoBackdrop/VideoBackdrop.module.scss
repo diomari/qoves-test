@@ -1,0 +1,42 @@
+.root {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.media,
+.picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.media {
+  object-fit: cover;
+}
+
+.poster,
+.fallback {
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+}
+
+.fallback {
+  background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.22), transparent 30%),
+    linear-gradient(155deg, #8d918c 0%, #686d68 52%, #333634 100%);
+}
+
+.overlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(41, 44, 42, 0.18) 0%,
+    rgba(43, 44, 42, 0.34) 48%,
+    rgba(25, 27, 26, 0.76) 100%
+  );
+}

@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" role="img" aria-label="Baseline prompt placeholder">
-  <rect width="640" height="360" fill="#6b655e"/>
-  <path d="M120 92h400v176H120z" fill="#ffffff" opacity="0.14"/>
-  <path d="M176 232c26-78 74-116 144-116s118 38 144 116" fill="none" stroke="#ffffff" stroke-width="8" opacity="0.58"/>
-  <path d="M320 88v190M180 180h280" stroke="#ffffff" stroke-width="5" opacity="0.4"/>
-</svg>

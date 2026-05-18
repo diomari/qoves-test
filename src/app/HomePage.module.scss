@@ -1,0 +1,43 @@
+.main {
+    min-height: 100vh;
+    background: var(--color-paper);
+    color: var(--color-ink);
+}
+
+.pageRightBorder {
+    position: fixed;
+    top: 0;
+    left: 98vw;
+    width: 1px;
+    height: 100%;
+    z-index: 1000;
+    border-right: solid 1px rgba(255, 255, 255, 0.1);
+}
+
+.pageLeftBorder {
+    position: fixed;
+    top: 0;
+    left: 2vw;
+    width: 1px;
+    height: 100%;
+    z-index: 1000;
+    border-right: solid 1px rgba(255, 255, 255, 0.08);
+}
+
+@media (min-width: 768px) {
+    .pageLeftBorder {
+        left: 1vw;
+    }
+    .pageRightBorder {
+        right: 99vw;
+    }
+}
+
+@media (min-width: 1280px) {
+    .pageLeftBorder {
+        display: none;
+    }
+    .pageRightBorder {
+        display: none;
+    }
+}
