@@ -168,7 +168,7 @@ export function StorySection() {
       if (desktopLeft) {
         storyTimeline.fromTo(
           desktopLeft,
-          { y: 900 },
+          { y: 800 },
           {
             duration: 2,
             y: -120,
@@ -180,10 +180,10 @@ export function StorySection() {
       if (desktopRight) {
         storyTimeline.fromTo(
           desktopRight,
-          { y: 800 },
+          { y: 500 },
           {
             duration: 2,
-            y: 20,
+            y: 0,
           },
           1.8,
         );
